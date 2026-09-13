@@ -1,0 +1,15 @@
+Routes handle endpoints → middleware handles cross-cutting concerns/validation → 
+controllers handle requests/responses → services handle business logic → 
+models handle database structure.
+
+api/
+├── endpoints.ts
+├── httpClient.ts
+└── authApi.ts
+
+auth/
+├── AuthInit.tsx
+├── LoginPage.tsx
+├── ProtectedRoute.tsx
+├── SignupPage.tsx
+└── authSlice.ts
