@@ -11,6 +11,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { useTransactions } from "@/hooks/useTransactions";
 
+const CHART_COLORS = [
+  "#2f3f7a",
+  "#1f9d8b",
+  "#e08e45",
+  "#c65b5b",
+  "#7a6fd1",
+  "#4f8fe0",
+  "#3f9142",
+  "#a8763e",
+];
+
 export default function SpendingChart() {
   const { transactions } = useTransactions();
 
@@ -57,8 +68,11 @@ export default function SpendingChart() {
                 outerRadius={100}
                 label
               >
-                {spendingData.map((entry) => (
-                  <Cell key={entry.category} />
+                {spendingData.map((entry, index) => (
+                  <Cell
+                    key={entry.category}
+                    fill={CHART_COLORS[index % CHART_COLORS.length]}
+                  />
                 ))}
               </Pie>
 

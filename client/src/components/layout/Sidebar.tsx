@@ -1,17 +1,14 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import {
   LayoutDashboard,
   ArrowLeftRight,
   PiggyBank,
   Wallet,
   Target,
-  LogOut,
   Wallet2,
 } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { logout } from "@/auth/authSlice";
+import ProfileMenu from "@/components/profile/ProfileMenu";
 
 const navItems = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard },
@@ -22,20 +19,11 @@ const navItems = [
 ];
 
 export default function Sidebar() {
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.auth.user);
-
-  const handleLogout = () => {
-    dispatch(logout());
-    navigate("/login", { replace: true });
-  };
-
   return (
-    <aside className="flex w-64 shrink-0 flex-col border-r bg-card">
+    <aside className="fixed inset-y-0 left-0 z-30 flex w-64 shrink-0 flex-col overflow-hidden bg-sidebar text-sidebar-foreground">
       {/* Brand */}
       <div className="flex items-center gap-2 p-5">
-        <div className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+        <div className="flex size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
           <Wallet2 className="size-4" />
         </div>
 
@@ -52,8 +40,8 @@ export default function Sidebar() {
             className={({ isActive }) =>
               `flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                 isActive
-                  ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  ? "bg-sidebar-primary text-sidebar-primary-foreground"
+                  : "text-sidebar-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground"
               }`
             }
           >
@@ -64,25 +52,8 @@ export default function Sidebar() {
       </nav>
 
       {/* User */}
-      <div className="flex items-center gap-2 border-t p-4">
-        <div className="flex size-8 items-center justify-center rounded-full bg-muted text-sm font-medium">
-          {user?.name?.charAt(0).toUpperCase() ?? "U"}
-        </div>
-
-        <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-medium">
-            {user?.name ?? "User"}
-          </p>
-        </div>
-
-        <Button
-          variant="ghost"
-          size="icon"
-          aria-label="Logout"
-          onClick={handleLogout}
-        >
-          <LogOut className="size-4" />
-        </Button>
+      <div className="border-t border-sidebar-border p-3">
+        <ProfileMenu />
       </div>
     </aside>
   );

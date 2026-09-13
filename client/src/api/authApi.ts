@@ -21,6 +21,17 @@ export interface RegisterData {
   dateOfBirth?: string;
 }
 
+export interface UpdateProfileData {
+  name?: string;
+  phone?: string;
+  dateOfBirth?: string;
+}
+
+export interface ChangePasswordData {
+  currentPassword: string;
+  newPassword: string;
+}
+
 export interface LoginData {
   email: string;
   password: string;
@@ -44,6 +55,16 @@ interface RefreshResponse {
 
 interface MeResponse {
   user: User;
+}
+
+interface UpdateProfileResponse {
+  message: string;
+  user: User;
+}
+
+interface UploadPhotoResponse {
+  message: string;
+  profilePhoto: string;
 }
 
 export async function registerUser(data: RegisterData) {
@@ -79,4 +100,40 @@ export async function getCurrentUser() {
   const response = await httpClient.get<MeResponse>(endpoints.users.me);
 
   return response.data.user;
+}
+
+export async function updateProfile(data: UpdateProfileData) {
+  const response = await httpClient.patch<UpdateProfileResponse>(
+    endpoints.users.me,
+    data,
+  );
+
+  return response.data.user;
+}
+
+export async function changePassword(data: ChangePasswordData) {
+  const response = await httpClient.patch<{ message: string }>(
+    endpoints.users.password,
+    data,
+  );
+
+  return response.data.message;
+}
+
+export async function uploadProfilePhoto(file: File) {
+  const formData = new FormData();
+
+  formData.append("photo", file);
+
+  const response = await httpClient.patch<UploadPhotoResponse>(
+    endpoints.users.photo,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    },
+  );
+
+  return response.data.profilePhoto;
 }

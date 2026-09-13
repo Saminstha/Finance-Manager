@@ -5,6 +5,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { registerUser } from "@/api/authApi";
+import { toast } from "@/components/ui/toast";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -69,18 +70,13 @@ export default function SignupPage() {
     } catch (error: any) {
       const backendErrors = error.response?.data?.errors;
 
-      if (backendErrors?.length) {
-        setServerError(
-          backendErrors
-            .map((item: { message: string }) => item.message)
-            .join(", "),
-        );
-      } else {
-        setServerError(
-          error.response?.data?.message ||
-            "Unable to create account. Please try again.",
-        );
-      }
+      const message = backendErrors?.length
+        ? backendErrors.map((item: { message: string }) => item.message).join(", ")
+        : error.response?.data?.message ||
+          "Unable to create account. Please try again.";
+
+      setServerError(message);
+      toast.error(message);
     }
   };
 

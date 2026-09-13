@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { toast } from "@/components/ui/toast";
 
 import {
   addSaving,
@@ -25,7 +26,19 @@ export function useSavings() {
   }, [dispatch]);
 
   const handleAddSaving = async (saving: CreateSavingData) => {
-    return dispatch(addSaving(saving)).unwrap();
+    try {
+      const result = await dispatch(addSaving(saving)).unwrap();
+
+      toast.success("Savings goal added successfully");
+
+      return result;
+    } catch (err) {
+      toast.error(
+        typeof err === "string" ? err : "Failed to add savings goal",
+      );
+
+      throw err;
+    }
   };
 
   const handleUpdateSaving = async (
@@ -34,18 +47,42 @@ export function useSavings() {
     currentSavedAmount: number,
     newSavedAmount: number,
   ) => {
-    return dispatch(
-      updateSavingGoal({
-        id,
-        saving,
-        currentSavedAmount,
-        newSavedAmount,
-      }),
-    ).unwrap();
+    try {
+      const result = await dispatch(
+        updateSavingGoal({
+          id,
+          saving,
+          currentSavedAmount,
+          newSavedAmount,
+        }),
+      ).unwrap();
+
+      toast.success("Savings goal updated successfully");
+
+      return result;
+    } catch (err) {
+      toast.error(
+        typeof err === "string" ? err : "Failed to update savings goal",
+      );
+
+      throw err;
+    }
   };
 
   const handleDeleteSaving = async (id: string) => {
-    return dispatch(deleteSavingGoal(id)).unwrap();
+    try {
+      const result = await dispatch(deleteSavingGoal(id)).unwrap();
+
+      toast.success("Savings goal deleted successfully");
+
+      return result;
+    } catch (err) {
+      toast.error(
+        typeof err === "string" ? err : "Failed to delete savings goal",
+      );
+
+      throw err;
+    }
   };
 
   return {

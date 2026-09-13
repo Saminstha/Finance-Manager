@@ -3,47 +3,64 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --radius: 0.625rem;
+  --radius: 0.65rem;
 
-  --background: oklch(0.99 0 0);
-  --foreground: oklch(0.145 0 0);
+  --background: oklch(0.985 0.004 247);
+  --foreground: oklch(0.22 0.02 258);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
+  --card-foreground: oklch(0.22 0.02 258);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --popover-foreground: oklch(0.22 0.02 258);
+  --primary: oklch(0.28 0.07 258);
+  --primary-foreground: oklch(0.98 0.005 247);
+  --secondary: oklch(0.955 0.008 250);
+  --secondary-foreground: oklch(0.28 0.05 258);
+  --muted: oklch(0.965 0.006 250);
+  --muted-foreground: oklch(0.5 0.02 258);
+  --accent: oklch(0.94 0.03 190);
+  --accent-foreground: oklch(0.32 0.07 195);
+  --destructive: oklch(0.58 0.215 25);
+  --border: oklch(0.9 0.008 250);
+  --input: oklch(0.9 0.008 250);
+  --ring: oklch(0.6 0.06 258);
+
+  /* Sidebar — the app's one deliberately bold surface */
+  --sidebar: oklch(0.22 0.035 258);
+  --sidebar-foreground: oklch(0.93 0.01 247);
+  --sidebar-muted-foreground: oklch(0.68 0.02 250);
+  --sidebar-border: oklch(1 0 0 / 8%);
+  --sidebar-accent: oklch(1 0 0 / 8%);
+  --sidebar-primary: oklch(0.62 0.13 190);
+  --sidebar-primary-foreground: oklch(0.16 0.03 258);
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
+  --background: oklch(0.17 0.016 260);
+  --foreground: oklch(0.95 0.006 247);
+  --card: oklch(0.21 0.018 260);
+  --card-foreground: oklch(0.95 0.006 247);
+  --popover: oklch(0.21 0.018 260);
+  --popover-foreground: oklch(0.95 0.006 247);
+  --primary: oklch(0.74 0.1 250);
+  --primary-foreground: oklch(0.17 0.02 260);
+  --secondary: oklch(0.27 0.018 260);
+  --secondary-foreground: oklch(0.95 0.006 247);
+  --muted: oklch(0.27 0.018 260);
+  --muted-foreground: oklch(0.68 0.018 250);
+  --accent: oklch(0.3 0.05 190);
+  --accent-foreground: oklch(0.86 0.08 185);
+  --destructive: oklch(0.7 0.19 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  --ring: oklch(0.6 0.08 250);
+
+  --sidebar: oklch(0.13 0.02 260);
+  --sidebar-foreground: oklch(0.93 0.01 247);
+  --sidebar-muted-foreground: oklch(0.62 0.02 250);
+  --sidebar-border: oklch(1 0 0 / 8%);
+  --sidebar-accent: oklch(1 0 0 / 8%);
+  --sidebar-primary: oklch(0.68 0.12 190);
+  --sidebar-primary-foreground: oklch(0.14 0.03 258);
 }
 
 @theme inline {
@@ -66,6 +83,14 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-muted-foreground: var(--sidebar-muted-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -79,7 +104,7 @@
 
   body {
     @apply bg-background text-foreground;
-    font: 15px/1.5 system-ui, "Segoe UI", Roboto, sans-serif;
+    font: 15px/1.55 -apple-system, "Segoe UI", system-ui, Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }

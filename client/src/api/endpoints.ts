@@ -6,6 +6,8 @@ export const endpoints = {
   },
   users: {
     me: "/users/me",
+    password: "/users/me/password",
+    photo: "/users/me/photo",
   },
 
   accounts: {

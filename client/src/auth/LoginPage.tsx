@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -7,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginUser } from "@/api/authApi";
 import { login } from "./authSlice";
 import { useAppDispatch } from "@/store/hooks";
+import { toast } from "@/components/ui/toast";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -32,7 +34,6 @@ export default function LoginPage() {
   const dispatch = useAppDispatch();
 
   const [serverError, setServerError] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
 
   const {
     register,
@@ -46,7 +47,7 @@ export default function LoginPage() {
     const state = location.state as { message?: string } | null;
 
     if (state?.message) {
-      setSuccessMessage(state.message);
+      toast.success(state.message);
 
       window.history.replaceState({}, document.title, window.location.pathname);
     }
@@ -54,7 +55,6 @@ export default function LoginPage() {
 
   const onSubmit = async (data: LoginFormData) => {
     setServerError("");
-    setSuccessMessage("");
 
     try {
       const response = await loginUser(data);
@@ -67,21 +67,18 @@ export default function LoginPage() {
         }),
       );
 
+      toast.success("Logged in successfully");
+
       navigate("/", { replace: true });
     } catch (error: any) {
       const backendErrors = error.response?.data?.errors;
 
-      if (backendErrors?.length) {
-        setServerError(
-          backendErrors
-            .map((item: { message: string }) => item.message)
-            .join(", "),
-        );
-      } else {
-        setServerError(
-          error.response?.data?.message || "Unable to login. Please try again.",
-        );
-      }
+      const message = backendErrors?.length
+        ? backendErrors.map((item: { message: string }) => item.message).join(", ")
+        : error.response?.data?.message || "Unable to login. Please try again.";
+
+      setServerError(message);
+      toast.error(message);
     }
   };
 
@@ -98,12 +95,6 @@ export default function LoginPage() {
 
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-            {successMessage && (
-              <div className="rounded-md border border-green-500/30 bg-green-500/10 p-3 text-sm">
-                {successMessage}
-              </div>
-            )}
-
             {serverError && (
               <div className="rounded-md border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
                 {serverError}

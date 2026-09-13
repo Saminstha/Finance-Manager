@@ -8,6 +8,7 @@ import {
 } from "@/store/slices/accountSlice";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { toast } from "@/components/ui/toast";
 
 import type { CreateAccountData, UpdateAccountData } from "@/api/accounts";
 
@@ -23,23 +24,42 @@ export function useAccounts() {
   }, [dispatch]);
 
   const handleAddAccount = async (account: CreateAccountData) => {
-    return dispatch(addAccount(account));
+    const result = await dispatch(addAccount(account));
+
+    if (addAccount.fulfilled.match(result)) {
+      toast.success("Account added successfully");
+    } else {
+      toast.error((result.payload as string) || "Failed to add account");
+    }
+
+    return result;
   };
 
   const handleUpdateAccount = async (
     id: string,
     account: UpdateAccountData,
   ) => {
-    return dispatch(
-      updateAccount({
-        id,
-        account,
-      }),
-    );
+    const result = await dispatch(updateAccount({ id, account }));
+
+    if (updateAccount.fulfilled.match(result)) {
+      toast.success("Account updated successfully");
+    } else {
+      toast.error((result.payload as string) || "Failed to update account");
+    }
+
+    return result;
   };
 
   const handleDeleteAccount = async (id: string) => {
-    return dispatch(deleteAccount(id));
+    const result = await dispatch(deleteAccount(id));
+
+    if (deleteAccount.fulfilled.match(result)) {
+      toast.success("Account deleted successfully");
+    } else {
+      toast.error((result.payload as string) || "Failed to delete account");
+    }
+
+    return result;
   };
 
   return {

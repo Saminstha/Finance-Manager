@@ -80,20 +80,8 @@ export default function MonthlyChart() {
               />
 
               <Legend />
-
-              <Bar
-                dataKey="income"
-                name="Income"
-                fill="currentColor"
-                className="text-green-500"
-              />
-
-              <Bar
-                dataKey="expenses"
-                name="Expenses"
-                fill="currentColor"
-                className="text-red-500"
-              />
+              <Bar dataKey="expenses" name="Expenses" fill="#ef4444" />
+              <Bar dataKey="income" name="Income" fill="#22c55e" />
             </BarChart>
           </ResponsiveContainer>
         </div>
