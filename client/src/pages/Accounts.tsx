@@ -340,7 +340,11 @@ export default function Accounts() {
             <div className="space-y-2">
               <Label htmlFor="name">Account Name</Label>
 
-              <Input id="name" placeholder="e.g. NIC Asia" {...register("name")} />
+              <Input
+                id="name"
+                placeholder="e.g. NIC Asia"
+                {...register("name")}
+              />
 
               {errors.name && (
                 <p className="text-sm text-destructive">
@@ -357,7 +361,7 @@ export default function Accounts() {
               <Select
                 value={selectedType}
                 onValueChange={(value) =>
-                  setValue("type", value as AccountType, {
+                  setValue("type", (value ?? "cash") as AccountType, {
                     shouldValidate: true,
                   })
                 }

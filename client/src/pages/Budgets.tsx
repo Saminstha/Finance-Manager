@@ -362,7 +362,7 @@ export default function Budgets() {
               <Select
                 value={selectedCategory}
                 onValueChange={(value) =>
-                  setValue("category", value, { shouldValidate: true })
+                  setValue("category", value ?? "", { shouldValidate: true })
                 }
               >
                 <SelectTrigger className="w-full">
